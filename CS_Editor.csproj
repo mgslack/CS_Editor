@@ -1,0 +1,38 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net6.0-windows</TargetFramework>
+	<PublishSingleFile>true</PublishSingleFile>
+    <Nullable>enable</Nullable>
+    <UseWindowsForms>true</UseWindowsForms>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <StartupObject>CS_Editor.Program</StartupObject>
+    <Title>Colony Ship Save Game Editor</Title>
+    <Authors>Michael G. Slack</Authors>
+    <Company>Slack &amp; Associates</Company>
+    <Description>A Colony Ship save game editor.  Allows for basic character editing (stats and skill levels)</Description>
+    <Copyright>(c) 2022 Slack &amp; Associates/M.G.Slack</Copyright>
+    <ApplicationIcon>CS_Editor.ico</ApplicationIcon>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Content Include="CS_Editor.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Properties\Settings.Designer.cs">
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+
+</Project>
