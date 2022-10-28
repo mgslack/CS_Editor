@@ -385,7 +385,10 @@ namespace CS_Editor
 
             try
             {
-                Process.Start(htmlPath);
+                Process p = new Process();
+                p.StartInfo.UseShellExecute = true; // needed for .net core????
+                p.StartInfo.FileName = htmlPath;
+                p.Start();
             }
             catch (Exception ex)
             {
