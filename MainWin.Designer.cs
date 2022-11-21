@@ -30,6 +30,21 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainWin));
             this.panel1 = new System.Windows.Forms.Panel();
+            this.panel3 = new System.Windows.Forms.Panel();
+            this.nudCells = new System.Windows.Forms.NumericUpDown();
+            this.label42 = new System.Windows.Forms.Label();
+            this.nudShells = new System.Windows.Forms.NumericUpDown();
+            this.label41 = new System.Windows.Forms.Label();
+            this.nud556 = new System.Windows.Forms.NumericUpDown();
+            this.label40 = new System.Windows.Forms.Label();
+            this.nud45 = new System.Windows.Forms.NumericUpDown();
+            this.label39 = new System.Windows.Forms.Label();
+            this.nud9mm = new System.Windows.Forms.NumericUpDown();
+            this.label38 = new System.Windows.Forms.Label();
+            this.nudMedKits = new System.Windows.Forms.NumericUpDown();
+            this.label37 = new System.Windows.Forms.Label();
+            this.nudCredits = new System.Windows.Forms.NumericUpDown();
+            this.label34 = new System.Windows.Forms.Label();
             this.nudExp = new System.Windows.Forms.NumericUpDown();
             this.label36 = new System.Windows.Forms.Label();
             this.nudCurHP = new System.Windows.Forms.NumericUpDown();
@@ -137,6 +152,14 @@
             this.openFileDlg = new System.Windows.Forms.OpenFileDialog();
             this.btnHelp = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
+            this.panel3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudCells)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudShells)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nud556)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nud45)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nud9mm)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudMedKits)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudCredits)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudExp)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudCurHP)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudCharisma)).BeginInit();
@@ -187,6 +210,7 @@
             // panel1
             // 
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel1.Controls.Add(this.panel3);
             this.panel1.Controls.Add(this.nudExp);
             this.panel1.Controls.Add(this.label36);
             this.panel1.Controls.Add(this.nudCurHP);
@@ -289,9 +313,173 @@
             this.panel1.Size = new System.Drawing.Size(591, 355);
             this.panel1.TabIndex = 0;
             // 
+            // panel3
+            // 
+            this.panel3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel3.Controls.Add(this.nudCells);
+            this.panel3.Controls.Add(this.label42);
+            this.panel3.Controls.Add(this.nudShells);
+            this.panel3.Controls.Add(this.label41);
+            this.panel3.Controls.Add(this.nud556);
+            this.panel3.Controls.Add(this.label40);
+            this.panel3.Controls.Add(this.nud45);
+            this.panel3.Controls.Add(this.label39);
+            this.panel3.Controls.Add(this.nud9mm);
+            this.panel3.Controls.Add(this.label38);
+            this.panel3.Controls.Add(this.nudMedKits);
+            this.panel3.Controls.Add(this.label37);
+            this.panel3.Controls.Add(this.nudCredits);
+            this.panel3.Controls.Add(this.label34);
+            this.panel3.Location = new System.Drawing.Point(229, 248);
+            this.panel3.Name = "panel3";
+            this.panel3.Size = new System.Drawing.Size(347, 100);
+            this.panel3.TabIndex = 97;
+            // 
+            // nudCells
+            // 
+            this.nudCells.Location = new System.Drawing.Point(148, 70);
+            this.nudCells.Maximum = new decimal(new int[] {
+            10000,
+            0,
+            0,
+            0});
+            this.nudCells.Name = "nudCells";
+            this.nudCells.Size = new System.Drawing.Size(60, 23);
+            this.nudCells.TabIndex = 105;
+            // 
+            // label42
+            // 
+            this.label42.AutoSize = true;
+            this.label42.Location = new System.Drawing.Point(113, 72);
+            this.label42.Name = "label42";
+            this.label42.Size = new System.Drawing.Size(35, 15);
+            this.label42.TabIndex = 104;
+            this.label42.Text = "&Cells:";
+            // 
+            // nudShells
+            // 
+            this.nudShells.Location = new System.Drawing.Point(47, 70);
+            this.nudShells.Maximum = new decimal(new int[] {
+            10000,
+            0,
+            0,
+            0});
+            this.nudShells.Name = "nudShells";
+            this.nudShells.Size = new System.Drawing.Size(60, 23);
+            this.nudShells.TabIndex = 103;
+            // 
+            // label41
+            // 
+            this.label41.AutoSize = true;
+            this.label41.Location = new System.Drawing.Point(3, 72);
+            this.label41.Name = "label41";
+            this.label41.Size = new System.Drawing.Size(40, 15);
+            this.label41.TabIndex = 102;
+            this.label41.Text = "&Shells:";
+            // 
+            // nud556
+            // 
+            this.nud556.Location = new System.Drawing.Point(251, 41);
+            this.nud556.Maximum = new decimal(new int[] {
+            10000,
+            0,
+            0,
+            0});
+            this.nud556.Name = "nud556";
+            this.nud556.Size = new System.Drawing.Size(60, 23);
+            this.nud556.TabIndex = 101;
+            // 
+            // label40
+            // 
+            this.label40.AutoSize = true;
+            this.label40.Location = new System.Drawing.Point(216, 43);
+            this.label40.Name = "label40";
+            this.label40.Size = new System.Drawing.Size(31, 15);
+            this.label40.TabIndex = 100;
+            this.label40.Text = "&5.56:";
+            // 
+            // nud45
+            // 
+            this.nud45.Location = new System.Drawing.Point(148, 41);
+            this.nud45.Maximum = new decimal(new int[] {
+            10000,
+            0,
+            0,
+            0});
+            this.nud45.Name = "nud45";
+            this.nud45.Size = new System.Drawing.Size(60, 23);
+            this.nud45.TabIndex = 99;
+            // 
+            // label39
+            // 
+            this.label39.AutoSize = true;
+            this.label39.Location = new System.Drawing.Point(113, 43);
+            this.label39.Name = "label39";
+            this.label39.Size = new System.Drawing.Size(25, 15);
+            this.label39.TabIndex = 98;
+            this.label39.Text = ".&45:";
+            // 
+            // nud9mm
+            // 
+            this.nud9mm.Location = new System.Drawing.Point(47, 41);
+            this.nud9mm.Maximum = new decimal(new int[] {
+            10000,
+            0,
+            0,
+            0});
+            this.nud9mm.Name = "nud9mm";
+            this.nud9mm.Size = new System.Drawing.Size(60, 23);
+            this.nud9mm.TabIndex = 97;
+            // 
+            // label38
+            // 
+            this.label38.AutoSize = true;
+            this.label38.Location = new System.Drawing.Point(3, 43);
+            this.label38.Name = "label38";
+            this.label38.Size = new System.Drawing.Size(38, 15);
+            this.label38.TabIndex = 96;
+            this.label38.Text = "&9mm:";
+            // 
+            // nudMedKits
+            // 
+            this.nudMedKits.Location = new System.Drawing.Point(202, 3);
+            this.nudMedKits.Name = "nudMedKits";
+            this.nudMedKits.Size = new System.Drawing.Size(50, 23);
+            this.nudMedKits.TabIndex = 95;
+            // 
+            // label37
+            // 
+            this.label37.AutoSize = true;
+            this.label37.Location = new System.Drawing.Point(143, 5);
+            this.label37.Name = "label37";
+            this.label37.Size = new System.Drawing.Size(53, 15);
+            this.label37.TabIndex = 80;
+            this.label37.Text = "&MedKits:";
+            // 
+            // nudCredits
+            // 
+            this.nudCredits.Location = new System.Drawing.Point(52, 3);
+            this.nudCredits.Maximum = new decimal(new int[] {
+            5000000,
+            0,
+            0,
+            0});
+            this.nudCredits.Name = "nudCredits";
+            this.nudCredits.Size = new System.Drawing.Size(74, 23);
+            this.nudCredits.TabIndex = 79;
+            // 
+            // label34
+            // 
+            this.label34.AutoSize = true;
+            this.label34.Location = new System.Drawing.Point(3, 5);
+            this.label34.Name = "label34";
+            this.label34.Size = new System.Drawing.Size(47, 15);
+            this.label34.TabIndex = 0;
+            this.label34.Text = "&Credits:";
+            // 
             // nudExp
             // 
-            this.nudExp.Location = new System.Drawing.Point(446, 219);
+            this.nudExp.Location = new System.Drawing.Point(446, 209);
             this.nudExp.Maximum = new decimal(new int[] {
             50000,
             0,
@@ -305,7 +493,7 @@
             // label36
             // 
             this.label36.AutoSize = true;
-            this.label36.Location = new System.Drawing.Point(373, 221);
+            this.label36.Location = new System.Drawing.Point(373, 211);
             this.label36.Name = "label36";
             this.label36.Size = new System.Drawing.Size(67, 15);
             this.label36.TabIndex = 95;
@@ -313,7 +501,7 @@
             // 
             // nudCurHP
             // 
-            this.nudCurHP.Location = new System.Drawing.Point(306, 219);
+            this.nudCurHP.Location = new System.Drawing.Point(306, 209);
             this.nudCurHP.Maximum = new decimal(new int[] {
             1000,
             0,
@@ -327,7 +515,7 @@
             // label35
             // 
             this.label35.AutoSize = true;
-            this.label35.Location = new System.Drawing.Point(229, 221);
+            this.label35.Location = new System.Drawing.Point(229, 211);
             this.label35.Name = "label35";
             this.label35.Size = new System.Drawing.Size(69, 15);
             this.label35.TabIndex = 93;
@@ -1344,7 +1532,7 @@
             // 
             this.lblCharName.AutoSize = true;
             this.lblCharName.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.lblCharName.Location = new System.Drawing.Point(100, 5);
+            this.lblCharName.Location = new System.Drawing.Point(101, 5);
             this.lblCharName.Name = "lblCharName";
             this.lblCharName.Size = new System.Drawing.Size(51, 15);
             this.lblCharName.TabIndex = 1;
@@ -1374,7 +1562,7 @@
             // 
             this.lblSaveFile.AutoSize = true;
             this.lblSaveFile.Font = new System.Drawing.Font("Segoe UI", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.lblSaveFile.Location = new System.Drawing.Point(74, 4);
+            this.lblSaveFile.Location = new System.Drawing.Point(75, 4);
             this.lblSaveFile.Name = "lblSaveFile";
             this.lblSaveFile.Size = new System.Drawing.Size(50, 13);
             this.lblSaveFile.TabIndex = 1;
@@ -1469,6 +1657,15 @@
             this.Load += new System.EventHandler(this.MainWin_Load);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
+            this.panel3.ResumeLayout(false);
+            this.panel3.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudCells)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudShells)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nud556)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nud45)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nud9mm)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudMedKits)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudCredits)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudExp)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudCurHP)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudCharisma)).EndInit();
@@ -1628,5 +1825,20 @@
         private Button btnExit;
         private OpenFileDialog openFileDlg;
         private Button btnHelp;
+        private Panel panel3;
+        private NumericUpDown nudCredits;
+        private Label label34;
+        private NumericUpDown nudCells;
+        private Label label42;
+        private NumericUpDown nudShells;
+        private Label label41;
+        private NumericUpDown nud556;
+        private Label label40;
+        private NumericUpDown nud45;
+        private Label label39;
+        private NumericUpDown nud9mm;
+        private Label label38;
+        private NumericUpDown nudMedKits;
+        private Label label37;
     }
 }

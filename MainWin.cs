@@ -28,6 +28,14 @@ using System.Reflection;
  * least not displayed.  All characters had the two slots (61 and 65) set to
  * '1', no exp, not tagged.  This may change with later versions of the game.
  * 
+ * Added functionality to allow editing of selected inventory amounts, such as
+ * credits, medkits and ammo.  For any of them, it is possibly play has none
+ * available so counts would not be editable for those not available.  Inventory
+ * counts only editable when updating main PC.
+ * 
+ * Note: will prompt for and load main PC at program start.  If not entered or
+ * not found, program will close.
+ * 
  * ----------------------------------------------------------------------------
  * 
  * Author: Michael G.Slack
@@ -35,7 +43,8 @@ using System.Reflection;
  *
  * ----------------------------------------------------------------------------
  * 
- * Revised: yyyy-mm-dd - xxxx.
+ * Revised: 2022-11-21 - Added editing a few inventory amounts (credits, medkits,
+ *                       and different ammos).
  * 
  */
 namespace CS_Editor
@@ -52,10 +61,23 @@ namespace CS_Editor
         private const int IDX_CHAR_CUR_HP = 2;
         private const int IDX_CHAR_LVL = 116;
         private const int IDX_CHAR_CUR_EXP = 117;
+        private const int MAX_INV_COUNTS = 7;
 
+        // inventory counts can edit (location strings)
+        private const string CREDITS_LOC_STR = "III_Credits.III_Credits_C"; // +72 bytes = credits value
+        private const string MEDKITS_LOC_STR = "III_Meds.III_Meds_C"; // +72 bytes = medkits value
+        private const string AMMO_9MM_LOC_STR = "III_Ammo_9mm.III_Ammo_9mm_C"; // +72 bytes = 9mm count value
+        private const string AMMO_45_LOC_STR = "III_Ammo_45.III_Ammo_45_C"; // +72 bytes = .45 count value
+        private const string AMMO_556_LOC_STR = "III_Ammo_556.III_Ammo_556_C"; // +72 bytes = 5.56 count value
+        private const string AMMO_SHELL_LOC_STR = "III_Ammo_Shells.III_Ammo_Shells_C"; // +72 bytes = shells count value
+        private const string AMMO_CELL_LOC_STR = "III_Ammo_Cell.III_Ammo_Cell_C"; // +72 bytes = cell count value
+        private const string END_OF_INV_STR = "Items Grid Position"; // end of inventory marker (main PC)
+
+        // registry key strings
         private const string REG_NAME = @"HKEY_CURRENT_USER\Software\Slack and Associates\Tools\CS_Editor";
         private const string REG_KEY1 = "PosX";
         private const string REG_KEY2 = "PosY";
+        private const string REG_KEY3 = "LastMainPCName";
         #endregion
 
         #region Private Index Maps
@@ -67,6 +89,7 @@ namespace CS_Editor
         #region Private Variables
         private string gameSaveFn = NOT_LOADED;
         private int charOffset = NOT_SET;
+        private string mainPCName = "";
         private NumericUpDown[] skills = new NumericUpDown[MAX_SKILLS];
         private NumericUpDown[] skillsExp = new NumericUpDown[MAX_SKILLS];
         private CheckBox[] skillTags = new CheckBox[MAX_SKILLS];
@@ -74,6 +97,11 @@ namespace CS_Editor
         private byte[] fileBuffer = new byte[0];
         private int[] charData = new int[MAX_CHAR_INTS];
         private bool charChanged = false;
+        private int charSelIdx = 0;
+        // order of inventory: credits, medkits, 9mm, .45, 5.56, shells, cells
+        private int[] invOffsets = { -1, -1, -1, -1, -1, -1, -1 };
+        private int[] invAmounts = { -1, -1, -1, -1, -1, -1, -1 };
+        private NumericUpDown[] inventory = new NumericUpDown[MAX_INV_COUNTS];
         #endregion
 
         // --------------------------------------------------------------------
@@ -87,10 +115,18 @@ namespace CS_Editor
             {
                 winX = (int)Registry.GetValue(REG_NAME, REG_KEY1, winX);
                 winY = (int)Registry.GetValue(REG_NAME, REG_KEY2, winY);
+                mainPCName = (string)Registry.GetValue(REG_NAME, REG_KEY3, "");
+                if (mainPCName == null) { mainPCName = ""; }
             }
             catch (Exception ex) { /* ignore, go with defaults */ }
 
             if ((winX != -1) && (winY != -1)) this.SetDesktopLocation(winX, winY);
+        }
+
+        private void WriteRegistryValues()
+        {
+            // only one to save, only write if not blank
+            if (mainPCName != "") { Registry.SetValue(REG_NAME, REG_KEY3, mainPCName); }
         }
 
         private void InitControls()
@@ -158,9 +194,18 @@ namespace CS_Editor
             attributes[3] = nudPerception;
             attributes[4] = nudIntelligence;
             attributes[5] = nudCharisma;
+
+            // setup inventory counts array
+            inventory[0] = nudCredits;
+            inventory[1] = nudMedKits;
+            inventory[2] = nud9mm;
+            inventory[3] = nud45;
+            inventory[4] = nud556;
+            inventory[5] = nudShells;
+            inventory[6] = nudCells;
         }
 
-        private byte[] CreateCheckValue()
+        private byte[] CreateNameCheckValue()
         {
             int nameLength = lblCharName.Text.Length;
             byte[] val = new byte[9 + nameLength];
@@ -179,12 +224,21 @@ namespace CS_Editor
             return val;
         }
 
+        private byte[] CreateStrCheckValue(string lookingFor)
+        {
+            byte[] val = new byte[lookingFor.Length];
+
+            for (int i = 0; i < val.Length; i++) val[i] = (byte)lookingFor[i];
+
+            return val;
+        }
+
         // As found: https://stackoverflow.com/questions/283456/byte-array-pattern-search/283815#283815
         // Author: Ing. Gerardo Sánchez, answered Jul 28, 2016 at 1:29
-        private int Search(byte[] src, byte[] pattern)
+        private int Search(byte[] src, byte[] pattern, int startPos)
         {
             int maxFirstCharSlot = src.Length - pattern.Length + 1;
-            for (int i = 0; i < maxFirstCharSlot; i++)
+            for (int i = startPos; i < maxFirstCharSlot; i++)
             {
                 if (src[i] != pattern[0]) // compare only first byte
                     continue;
@@ -197,6 +251,68 @@ namespace CS_Editor
                 }
             }
             return NOT_SET;
+        }
+
+        private int SearchFor(string lookingFor, int maxOffset)
+        {
+            byte[] val = CreateStrCheckValue(lookingFor);
+
+            int offset = Search(fileBuffer, val, charOffset);
+            if (offset > maxOffset) offset = NOT_SET;
+
+            if (offset != NOT_SET && lookingFor != END_OF_INV_STR)
+            {
+                offset += lookingFor.Length + 72;
+            }
+
+            return offset;
+        }
+
+        private void LoadInvDataNow()
+        {
+            using (MemoryStream memFile = new MemoryStream(fileBuffer))
+            {
+                using (BinaryReader reader = new BinaryReader(memFile))
+                {
+                    for (int i = 0; i < MAX_INV_COUNTS; i++)
+                    {
+                        if (invOffsets[i] != NOT_SET)
+                        {
+                            memFile.Position = invOffsets[i];
+                            invAmounts[i] = reader.ReadInt32();
+                        }
+                        else
+                        {
+                            invAmounts[i] = NOT_SET;
+                        }
+                    }
+                }
+            }
+        }
+
+        private void LoadInventoryData()
+        {
+            if (lblCharName.Text == mainPCName)
+            {
+                int maxOffset = SearchFor(END_OF_INV_STR, fileBuffer.Length);
+
+                invOffsets[0] = SearchFor(CREDITS_LOC_STR, maxOffset);
+                invOffsets[1] = SearchFor(MEDKITS_LOC_STR, maxOffset);
+                invOffsets[2] = SearchFor(AMMO_9MM_LOC_STR, maxOffset);
+                invOffsets[3] = SearchFor(AMMO_45_LOC_STR, maxOffset);
+                invOffsets[4] = SearchFor(AMMO_556_LOC_STR, maxOffset);
+                invOffsets[5] = SearchFor(AMMO_SHELL_LOC_STR, maxOffset);
+                invOffsets[6] = SearchFor(AMMO_CELL_LOC_STR, maxOffset);
+                LoadInvDataNow();
+            }
+            else
+            {
+                for (int i = 0; i < MAX_INV_COUNTS; i++)
+                {
+                    invOffsets[i] = NOT_SET;
+                    invAmounts[i] = NOT_SET;
+                }
+            }
         }
 
         private void LoadCharData()
@@ -213,6 +329,24 @@ namespace CS_Editor
                     }
                 }
             }
+
+            LoadInventoryData();
+        }
+
+        private void LoadInventoryControls()
+        {
+            for (int i = 0; i < MAX_INV_COUNTS; i++)
+            {
+                inventory[i].Enabled = (invAmounts[i] != NOT_SET);
+                if (inventory[i].Enabled)
+                {
+                    inventory[i].Value = invAmounts[i];
+                }
+                else
+                {
+                    inventory[i].Value = 0;
+                }
+            }
         }
 
         private void LoadControls()
@@ -220,6 +354,7 @@ namespace CS_Editor
             nudCurHP.Value = charData[IDX_CHAR_CUR_HP];
             nudExp.Value = charData[IDX_CHAR_CUR_EXP];
 
+            skills[0].Focus();
             for (int i = 0; i < MAX_SKILLS; i++)
             {
                 skills[i].Value = charData[skillMap[i]];
@@ -232,7 +367,20 @@ namespace CS_Editor
                 attributes[i].Value = charData[attrMap[i]];
             }
 
+            LoadInventoryControls();
+
             charChanged = false;
+        }
+
+        private void UnloadInventoryControls()
+        {
+            for (int i = 0; i < MAX_INV_COUNTS; i++)
+            {
+                if (inventory[i].Enabled)
+                {
+                    invAmounts[i] = (int)inventory[i].Value;
+                }
+            }
         }
 
         private void UnLoadControls()
@@ -251,6 +399,20 @@ namespace CS_Editor
             {
                 charData[attrMap[i]] = (int)attributes[i].Value;
             }
+
+            UnloadInventoryControls();
+        }
+
+        private void SaveInventoryData(MemoryStream memFile, BinaryWriter writer)
+        {
+            for (int i = 0; i < MAX_INV_COUNTS; i++)
+            {
+                if (invOffsets[i] != NOT_SET)
+                {
+                    memFile.Position = invOffsets[i];
+                    writer.Write(invAmounts[i]);
+                }
+            }
         }
 
         private void SaveCharData()
@@ -265,8 +427,48 @@ namespace CS_Editor
                     {
                         writer.Write(charData[i]);
                     }
+
+                    SaveInventoryData(memFile, writer);
                 }
             }
+        }
+
+        private bool FindChar(string name)
+        {
+            lblCharName.Text = name;
+            byte[] nameVal = CreateNameCheckValue();
+            charOffset = Search(fileBuffer, nameVal, 0);
+            if (charOffset == NOT_SET)
+            {
+                MessageBox.Show(lblCharName.Text + " not found in save game file.", this.Text,
+                    MessageBoxButtons.OK);
+                lblCharName.Text = NOT_LOADED; charChanged = false;
+                return false;
+            }
+            else
+            {
+                charOffset += nameVal.Length + 1;
+                LoadCharData();
+                lblCharName.Text += "  (lvl: " + charData[IDX_CHAR_LVL] + ")";
+                LoadControls();
+                return true;
+            }
+        }
+
+        private bool GetMainChar()
+        {
+            PCNameDlg dlg = new PCNameDlg();
+            bool gotPC = false;
+
+            dlg.CharName = mainPCName;
+            if (dlg.ShowDialog() == DialogResult.OK)
+            {
+                mainPCName = dlg.CharName;
+                gotPC = FindChar(mainPCName);
+            }
+            dlg.Dispose();
+
+            return gotPC;
         }
         #endregion
 
@@ -288,6 +490,7 @@ namespace CS_Editor
 
         private void MainWin_FormClosed(object sender, FormClosedEventArgs e)
         {
+            WriteRegistryValues();
             if (this.WindowState == FormWindowState.Normal)
             {
                 Registry.SetValue(REG_NAME, REG_KEY1, this.Location.X);
@@ -297,6 +500,8 @@ namespace CS_Editor
 
         private void BtnOpen_Click(object sender, EventArgs e)
         {
+            bool setBack = false;
+
             if (openFileDlg.ShowDialog() == DialogResult.OK)
             {
                 gameSaveFn = openFileDlg.FileName;
@@ -304,13 +509,18 @@ namespace CS_Editor
                 {
                     fileBuffer = File.ReadAllBytes(gameSaveFn);
                     lblSaveFile.Text = Path.GetFileName(gameSaveFn);
+                    setBack = !GetMainChar();
                 }
                 catch (Exception ex)
                 {
-                    gameSaveFn = NOT_LOADED; lblSaveFile.Text = NOT_LOADED;
+                    setBack = true;
                     MessageBox.Show("Open File - " + ex.Message, this.Text, MessageBoxButtons.OK);
                 }
-                lblCharName.Text = NOT_LOADED; charOffset = NOT_SET;
+                if (setBack)
+                {
+                    gameSaveFn = NOT_LOADED; lblSaveFile.Text = NOT_LOADED;
+                    lblCharName.Text = NOT_LOADED; charOffset = NOT_SET;
+                }
             }
         }
 
@@ -348,24 +558,15 @@ namespace CS_Editor
             if (gameSaveFn != NOT_LOADED && res == DialogResult.Yes)
             {
                 CharSelDlg selDlg = new CharSelDlg();
-                selDlg.CharName = lblCharName.Text;
+                selDlg.CharSelIdx = charSelIdx;
+                selDlg.PCName = mainPCName;
                 if (selDlg.ShowDialog() == DialogResult.OK)
                 {
-                    lblCharName.Text = selDlg.CharName;
-                    byte[] nameVal = CreateCheckValue();
-                    charOffset = Search(fileBuffer, nameVal);
-                    if (charOffset == NOT_SET)
+                    charSelIdx = selDlg.CharSelIdx;
+                    // only search for new name if looking for different name
+                    if (lblCharName.Text != selDlg.CharName)
                     {
-                        MessageBox.Show(lblCharName.Text + " not found in save game file.", this.Text,
-                            MessageBoxButtons.OK);
-                        lblCharName.Text = NOT_LOADED; charChanged = false;
-                    }
-                    else
-                    {
-                        charOffset += nameVal.Length + 1;
-                        LoadCharData();
-                        lblCharName.Text += "  (lvl: " + charData[IDX_CHAR_LVL] + ")";
-                        LoadControls();
+                        _ = FindChar(selDlg.CharName); // ignore true/false return
                     }
                 }
                 selDlg.Dispose();

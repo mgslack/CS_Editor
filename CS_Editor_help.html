@@ -10,18 +10,31 @@
     </div>
     <img style="width: 191px; height: 255px; float: left; padding: 0px 5px 5px 0px;" alt="CS Editor Image" src="CS_Editor_help.jpg">
     <p>The CS_Editor allows one to open and edit save games created by Iron Tower Studio's Colony Ship.
-       The editor will open with a empty character screen, from there, open a save game file and then find
-       the character to edit.  Skills, HPs, Attributes and XP are then loaded to the character editor panel
-       for the searched for character.  The companions potentially available in a save game are listed
-       in the drop down.  Note though, not all will be available in the save game at certain states.</p>
+       The editor will open with a empty character screen. Once a save game is selected (open save),
+       the editor will prompt for the main character's name (the PC), then load the main character's
+       stats into the window along with selected counts of inventory items.  Skills, HPs, Attributes
+       and XP are then loaded to the character editor panel for the main PC character, along with
+       inventory amounts of credits, med kits and ammo.  To select one of the companions potentially
+       available in a save game, they are accessible via the 'find char' button.  All known companions
+       are listed (including the main PC) in the drop down.  Note though, not all will be available in
+       the save game at certain states of the game (may get a 'character not found message).</p>
+    <p>The inventory can only be edited while editing the main PC.  For the companions, the inventory
+       fields are disabled.  The reason is simple, the main PC in the save file holds the inventory.
+       The inventory amounts are limited to 5,000,000 credits (way, way, way above what can be gotten
+       ever, naturally, in game play), 100 med kits (same as in game), 10,000 of each type of ammo.
+       Believe the game is capped below that amount.  Typically, would not go above 100,000 for credits
+       and above 2000 or so for each ammo type.  Note, if you do not have credits, med kits or one or
+       more of the ammo types, you won't be able to change the amount of that item, since you don't
+       have any in inventory.  The editor will not add the item to the save game if you don't have
+       any to begin with.
     <p>The editor is pretty simple.  Can open a save game file, find a character to edit and edit
        some of the skills, attributes and other information for the character.  Can not add/change items or
        other data, just skills, skill exp, tagged, attributes, current HP and XP.  Editor will cap
        skills and attributes similarly to what the game does.</p>
     <div style="font-weight:bold;">Game Options:</div>
-    <p>There are no real options to set or configure for the LoX editor.  The program does save off
+    <p>There are no real options to set or configure for the CS editor.  The program does save off
        the main window position when exiting the program and saves the directory last loaded
-       a CS save game from.</p>
+       a CS save game from and will save off last entered main PC name.</p>
     <p>For more information about Colony Ship, see
        <a href="http://irontowerstudio.com/colony-ship-news">Iron Tower Studio's CS News</a>.</p>
     <div style="text-align: center; font-size: smaller;">

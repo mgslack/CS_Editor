@@ -9,7 +9,7 @@
  * 
  * ----------------------------------------------------------------------------
  * 
- * Revised: yyyy-mm-dd - xxxx.
+ * Revised: 2022-11-21 - Update to allow for some inventory items (main PC).
  * 
  */
 namespace CS_Editor
@@ -18,8 +18,16 @@ namespace CS_Editor
     {
         #region Properties
         private string _charName = "";
-        public string CharName { get { return _charName; } set { _charName = value; } }
+        public string CharName { get { return _charName; } }
+
+        private string _pcName = "";
+        public string PCName { set { _pcName = value; } }
+
+        private int _charSelIdx = 0;
+        public int CharSelIdx { get { return _charSelIdx; } set { _charSelIdx = value; } }
         #endregion
+
+        // --------------------------------------------------------------------
 
         #region Constructor
         public CharSelDlg()
@@ -28,14 +36,27 @@ namespace CS_Editor
         }
         #endregion
 
-        #region Button Handler
+        // --------------------------------------------------------------------
+
+        #region Event Handlers
+        private void CharSelDlg_Load(object sender, EventArgs e)
+        {
+            if (_pcName != "")
+            {
+                cbNames.Items[0] = _pcName;
+            }
+
+            cbNames.SelectedIndex = _charSelIdx;
+        }
+
         private void OkBtn_Click(object sender, EventArgs e)
         {
-            _charName = cbCharName.Text.Trim();
+            _charName = cbNames.Text.Trim();
+            _charSelIdx = cbNames.SelectedIndex;
 
             if (string.IsNullOrEmpty(_charName))
             {
-                MessageBox.Show("Need to enter or select a name.", this.Text, MessageBoxButtons.OK);
+                MessageBox.Show("Need to select a name.", this.Text, MessageBoxButtons.OK);
             }
             else
             {
