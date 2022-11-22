@@ -11,12 +11,13 @@
     <Title>Colony Ship Save Game Editor</Title>
     <Authors>Michael G. Slack</Authors>
     <Company>Slack &amp; Associates</Company>
-    <Description>A Colony Ship save game editor.  Allows for basic character editing (stats and skill levels)</Description>
+    <Description>A Colony Ship save game editor.  Allows for basic character editing (stats and skill levels) and some inventory item counts.</Description>
     <Copyright>(c) 2022 Slack &amp; Associates/M.G.Slack</Copyright>
     <ApplicationIcon>CS_Editor.ico</ApplicationIcon>
-    <AssemblyVersion>1.1.0.0</AssemblyVersion>
-    <FileVersion>1.1.0.0</FileVersion>
-    <Version>1.1.0</Version>
+    <AssemblyVersion>1.2.0.0</AssemblyVersion>
+    <FileVersion>1.2.0.0</FileVersion>
+    <Version>1.2.0</Version>
+    <Product>Colony Ship Save Game Editor</Product>
   </PropertyGroup>
 
   <ItemGroup>
@@ -24,11 +25,23 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="Properties\Resources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Update="Properties\Settings.Designer.cs">
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <AutoGen>True</AutoGen>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
 
   <ItemGroup>

@@ -45,6 +45,8 @@ using System.Reflection;
  * 
  * Revised: 2022-11-21 - Added editing a few inventory amounts (credits, medkits,
  *                       and different ammos).
+ *          2022-11-22 - Added about box dialog, updated some 'magic numbers' to
+ *                       be constants.
  * 
  */
 namespace CS_Editor
@@ -62,6 +64,7 @@ namespace CS_Editor
         private const int IDX_CHAR_LVL = 116;
         private const int IDX_CHAR_CUR_EXP = 117;
         private const int MAX_INV_COUNTS = 7;
+        private const int INV_COUNT_OFFSET = 72;
 
         // inventory counts can edit (location strings)
         private const string CREDITS_LOC_STR = "III_Credits.III_Credits_C"; // +72 bytes = credits value
@@ -99,8 +102,8 @@ namespace CS_Editor
         private bool charChanged = false;
         private int charSelIdx = 0;
         // order of inventory: credits, medkits, 9mm, .45, 5.56, shells, cells
-        private int[] invOffsets = { -1, -1, -1, -1, -1, -1, -1 };
-        private int[] invAmounts = { -1, -1, -1, -1, -1, -1, -1 };
+        private int[] invOffsets = { NOT_SET, NOT_SET, NOT_SET, NOT_SET, NOT_SET, NOT_SET, NOT_SET };
+        private int[] invAmounts = { NOT_SET, NOT_SET, NOT_SET, NOT_SET, NOT_SET, NOT_SET, NOT_SET };
         private NumericUpDown[] inventory = new NumericUpDown[MAX_INV_COUNTS];
         #endregion
 
@@ -127,6 +130,16 @@ namespace CS_Editor
         {
             // only one to save, only write if not blank
             if (mainPCName != "") { Registry.SetValue(REG_NAME, REG_KEY3, mainPCName); }
+        }
+
+        private void SetupContextMenu()
+        {
+            ContextMenuStrip mnu = new ContextMenuStrip();
+            ToolStripMenuItem mnuAbout = new ToolStripMenuItem("About");
+
+            mnuAbout.Click += new EventHandler(mnuAbout_Click);
+            mnu.Items.AddRange(new ToolStripMenuItem[] { mnuAbout });
+            this.ContextMenuStrip = mnu;
         }
 
         private void InitControls()
@@ -262,7 +275,7 @@ namespace CS_Editor
 
             if (offset != NOT_SET && lookingFor != END_OF_INV_STR)
             {
-                offset += lookingFor.Length + 72;
+                offset += lookingFor.Length + INV_COUNT_OFFSET;
             }
 
             return offset;
@@ -486,6 +499,7 @@ namespace CS_Editor
         {
             LoadRegistryValues();
             InitControls();
+            SetupContextMenu();
         }
 
         private void MainWin_FormClosed(object sender, FormClosedEventArgs e)
@@ -605,6 +619,14 @@ namespace CS_Editor
         private void Xxx_CheckedChanged(object sender, EventArgs e)
         {
             charChanged = true;
+        }
+
+        private void mnuAbout_Click(object sender, EventArgs e)
+        {
+            AboutBox about = new AboutBox();
+
+            about.ShowDialog(this);
+            about.Dispose();
         }
         #endregion
     }
