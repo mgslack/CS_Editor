@@ -31,10 +31,10 @@ using System.Reflection;
  * Added functionality to allow editing of selected inventory amounts, such as
  * credits, medkits and ammo.  For any of them, it is possibly play has none
  * available so counts would not be editable for those not available.  Inventory
- * counts only editable when updating main PC.
+ * counts only editable when updating main (created) PC.
  * 
- * Note: will prompt for and load main PC at program start.  If not entered or
- * not found, program will close.
+ * Note: will prompt for and load main (created) PC when opening a save file.
+ * If not found, file will not be 'opened'.
  * 
  * ----------------------------------------------------------------------------
  * 
