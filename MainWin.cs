@@ -47,6 +47,8 @@ using System.Reflection;
  *                       and different ammos).
  *          2022-11-22 - Added about box dialog, updated some 'magic numbers' to
  *                       be constants.
+ *          2022-12-05 - Added additional companion names to char selection drop
+ *                       down.
  * 
  */
 namespace CS_Editor
