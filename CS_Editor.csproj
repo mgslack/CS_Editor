@@ -14,9 +14,9 @@
     <Description>A Colony Ship save game editor.  Allows for basic character editing (stats and skill levels) and some inventory item counts.</Description>
     <Copyright>(c) 2022 Slack &amp; Associates/M.G.Slack</Copyright>
     <ApplicationIcon>CS_Editor.ico</ApplicationIcon>
-    <AssemblyVersion>1.2.1.0</AssemblyVersion>
-    <FileVersion>1.2.1.0</FileVersion>
-    <Version>1.2.1</Version>
+    <AssemblyVersion>1.3.0.0</AssemblyVersion>
+    <FileVersion>1.3.0.0</FileVersion>
+    <Version>1.3.0</Version>
     <Product>Colony Ship Save Game Editor</Product>
   </PropertyGroup>
 

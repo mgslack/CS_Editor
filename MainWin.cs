@@ -49,6 +49,7 @@ using System.Reflection;
  *                       be constants.
  *          2022-12-05 - Added additional companion names to char selection drop
  *                       down.
+ *          2022-12-13 - Updated for game version 0.9.13.
  * 
  */
 namespace CS_Editor
@@ -61,12 +62,13 @@ namespace CS_Editor
         private const int NOT_SET = -1;
         private const int MAX_SKILLS = 18;
         private const int MAX_ATTRIBUTES = 6;
-        private const int MAX_CHAR_INTS = 121;
+        private const int MAX_CHAR_INTS = 140;
         private const int IDX_CHAR_CUR_HP = 2;
-        private const int IDX_CHAR_LVL = 116;
-        private const int IDX_CHAR_CUR_EXP = 117;
+        private const int IDX_CHAR_LVL = 134;
+        private const int IDX_CHAR_CUR_EXP = 135;
         private const int MAX_INV_COUNTS = 7;
         private const int INV_COUNT_OFFSET = 72;
+        private const byte CHAR_CHK_VAL = 5;
 
         // inventory counts can edit (location strings)
         private const string CREDITS_LOC_STR = "III_Credits.III_Credits_C"; // +72 bytes = credits value
@@ -87,8 +89,8 @@ namespace CS_Editor
 
         #region Private Index Maps
         private readonly int[] attrMap = { 6, 11, 16, 21, 26, 31 };
-        // skill positions 61 and 65 are unused as of v0.8.247
-        private readonly int[] skillMap = { 37, 41, 45, 49, 53, 57, 69, 73, 77, 81, 85, 89, 93, 97, 101, 105, 109, 113 };
+        // skill positions 67 and 72 are unused as of v0.9.13
+        private readonly int[] skillMap = { 37, 42, 47, 52, 57, 62, 77, 82, 87, 92, 97, 102, 107, 112, 117, 122, 127, 132 };
         #endregion
 
         #region Private Variables
@@ -230,7 +232,7 @@ namespace CS_Editor
             {
                 val[i] = 0;
             }
-            val[1] = 4; val[5] = (byte)(nameLength + 1);
+            val[1] = CHAR_CHK_VAL; val[5] = (byte)(nameLength + 1);
             for (int i = 0; i < nameLength; i++)
             {
                 val[9 + i] = (byte)lblCharName.Text[i];

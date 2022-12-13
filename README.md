@@ -11,3 +11,7 @@ out as time wears on.
 Note, added functionality to allow one to edit certain inventory amounts when editing stats for the main, created PC.
 Allow editing amounts of credits, med kits and ammo, if have any in inventory of the save game editing.  Again, editor
 has not been extensively tested, so USE AT YOUR OWN RISK (and back up saves before using).
+
+With version 0.9.13 of the game, the skills increased in size by 1.  Instead of 4 integers representing each
+skill, there are now 5 integers.  Not sure what the other value represents for the skill, but had to update
+editor for v0.9.13 to read the skills appropriately.
