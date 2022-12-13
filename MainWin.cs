@@ -50,6 +50,7 @@ using System.Reflection;
  *          2022-12-05 - Added additional companion names to char selection drop
  *                       down.
  *          2022-12-13 - Updated for game version 0.9.13.
+ *                     - Fixed index to level and exp
  * 
  */
 namespace CS_Editor
@@ -64,8 +65,8 @@ namespace CS_Editor
         private const int MAX_ATTRIBUTES = 6;
         private const int MAX_CHAR_INTS = 140;
         private const int IDX_CHAR_CUR_HP = 2;
-        private const int IDX_CHAR_LVL = 134;
-        private const int IDX_CHAR_CUR_EXP = 135;
+        private const int IDX_CHAR_LVL = 136;
+        private const int IDX_CHAR_CUR_EXP = 137;
         private const int MAX_INV_COUNTS = 7;
         private const int INV_COUNT_OFFSET = 72;
         private const byte CHAR_CHK_VAL = 5;
