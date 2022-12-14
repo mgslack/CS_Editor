@@ -346,6 +346,7 @@
             this.nudCells.Name = "nudCells";
             this.nudCells.Size = new System.Drawing.Size(60, 23);
             this.nudCells.TabIndex = 105;
+            this.nudCells.ValueChanged += new System.EventHandler(this.Xxx_ValueChanged);
             // 
             // label42
             // 
@@ -367,6 +368,7 @@
             this.nudShells.Name = "nudShells";
             this.nudShells.Size = new System.Drawing.Size(60, 23);
             this.nudShells.TabIndex = 103;
+            this.nudShells.ValueChanged += new System.EventHandler(this.Xxx_ValueChanged);
             // 
             // label41
             // 
@@ -388,6 +390,7 @@
             this.nud556.Name = "nud556";
             this.nud556.Size = new System.Drawing.Size(60, 23);
             this.nud556.TabIndex = 101;
+            this.nud556.ValueChanged += new System.EventHandler(this.Xxx_ValueChanged);
             // 
             // label40
             // 
@@ -409,6 +412,7 @@
             this.nud45.Name = "nud45";
             this.nud45.Size = new System.Drawing.Size(60, 23);
             this.nud45.TabIndex = 99;
+            this.nud45.ValueChanged += new System.EventHandler(this.Xxx_ValueChanged);
             // 
             // label39
             // 
@@ -430,6 +434,7 @@
             this.nud9mm.Name = "nud9mm";
             this.nud9mm.Size = new System.Drawing.Size(60, 23);
             this.nud9mm.TabIndex = 97;
+            this.nud9mm.ValueChanged += new System.EventHandler(this.Xxx_ValueChanged);
             // 
             // label38
             // 
@@ -446,6 +451,7 @@
             this.nudMedKits.Name = "nudMedKits";
             this.nudMedKits.Size = new System.Drawing.Size(50, 23);
             this.nudMedKits.TabIndex = 95;
+            this.nudMedKits.ValueChanged += new System.EventHandler(this.Xxx_ValueChanged);
             // 
             // label37
             // 
@@ -467,6 +473,7 @@
             this.nudCredits.Name = "nudCredits";
             this.nudCredits.Size = new System.Drawing.Size(74, 23);
             this.nudCredits.TabIndex = 79;
+            this.nudCredits.ValueChanged += new System.EventHandler(this.Xxx_ValueChanged);
             // 
             // label34
             // 

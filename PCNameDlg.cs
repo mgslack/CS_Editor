@@ -10,7 +10,7 @@
  * 
  * ----------------------------------------------------------------------------
  * 
- * Revised: yyyy-mm-dd - xxxx.
+ * Revised: 2022-12-14 - Updated OK button text.
  * 
  */
 namespace CS_Editor

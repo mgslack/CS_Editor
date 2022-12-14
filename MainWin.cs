@@ -51,6 +51,10 @@ using System.Reflection;
  *                       down.
  *          2022-12-13 - Updated for game version 0.9.13.
  *                     - Fixed index to level and exp
+ *          2022-12-14 - Added 'value changed' events to inventory count fields
+ *                       to capture when values changed or not to prompt save if
+ *                       they did (or not prompt 'sure you want to' when they
+ *                       were changed).
  * 
  */
 namespace CS_Editor
