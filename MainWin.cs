@@ -55,6 +55,8 @@ using System.Reflection;
  *                       to capture when values changed or not to prompt save if
  *                       they did (or not prompt 'sure you want to' when they
  *                       were changed).
+ *          2023-01-04 - Updated maximum value of medkits allowed.  Seems to be
+ *                       more than 100.  Upped it to 5000.
  * 
  */
 namespace CS_Editor

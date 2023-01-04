@@ -448,8 +448,13 @@
             // nudMedKits
             // 
             this.nudMedKits.Location = new System.Drawing.Point(202, 3);
+            this.nudMedKits.Maximum = new decimal(new int[] {
+            5000,
+            0,
+            0,
+            0});
             this.nudMedKits.Name = "nudMedKits";
-            this.nudMedKits.Size = new System.Drawing.Size(50, 23);
+            this.nudMedKits.Size = new System.Drawing.Size(53, 23);
             this.nudMedKits.TabIndex = 95;
             this.nudMedKits.ValueChanged += new System.EventHandler(this.Xxx_ValueChanged);
             // 
