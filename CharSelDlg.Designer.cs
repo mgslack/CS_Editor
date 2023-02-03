@@ -74,7 +74,9 @@
             "Jed",
             "Mathias",
             "Garret",
-            "Cobra"});
+            "Cobra",
+            "Knurl",
+            "Harbinger"});
             this.cbNames.Location = new System.Drawing.Point(148, 15);
             this.cbNames.Name = "cbNames";
             this.cbNames.Size = new System.Drawing.Size(196, 23);

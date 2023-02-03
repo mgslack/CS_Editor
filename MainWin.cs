@@ -57,6 +57,7 @@ using System.Reflection;
  *                       were changed).
  *          2023-01-04 - Updated maximum value of medkits allowed.  Seems to be
  *                       more than 100.  Upped it to 5000.
+ *          2023-02-03 - Updated companion name list.
  * 
  */
 namespace CS_Editor
