@@ -58,6 +58,8 @@ using System.Reflection;
  *          2023-01-04 - Updated maximum value of medkits allowed.  Seems to be
  *                       more than 100.  Upped it to 5000.
  *          2023-02-03 - Updated companion name list.
+ *          2023-12-03 - Updated character find routine to find chars with the
+ *                       release version (or at least v1.0.10).
  * 
  */
 namespace CS_Editor
@@ -76,7 +78,7 @@ namespace CS_Editor
         private const int IDX_CHAR_CUR_EXP = 137;
         private const int MAX_INV_COUNTS = 7;
         private const int INV_COUNT_OFFSET = 72;
-        private const byte CHAR_CHK_VAL = 5;
+        private const byte CHAR_CHK_VAL = 6;
 
         // inventory counts can edit (location strings)
         private const string CREDITS_LOC_STR = "III_Credits.III_Credits_C"; // +72 bytes = credits value
@@ -235,7 +237,7 @@ namespace CS_Editor
             int nameLength = lblCharName.Text.Length;
             byte[] val = new byte[9 + nameLength];
 
-            // check value '00 04 00 00 00 [name length + 1] 00 00 00 [name]'
+            // check value '00 06 00 00 00 [name length + 1] 00 00 00 [name]'
             for (int i = 0; i < val.Length; i++)
             {
                 val[i] = 0;
