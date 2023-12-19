@@ -60,6 +60,9 @@ using System.Reflection;
  *          2023-02-03 - Updated companion name list.
  *          2023-12-03 - Updated character find routine to find chars with the
  *                       release version (or at least v1.0.10).
+ *          2023-12-18 - Updated to pick up the right experience value from
+ *                       save file.  Was picking up the delta value, which didn't
+ *                       update the experience.
  * 
  */
 namespace CS_Editor
@@ -75,7 +78,7 @@ namespace CS_Editor
         private const int MAX_CHAR_INTS = 140;
         private const int IDX_CHAR_CUR_HP = 2;
         private const int IDX_CHAR_LVL = 136;
-        private const int IDX_CHAR_CUR_EXP = 137;
+        private const int IDX_CHAR_CUR_EXP = 138;
         private const int MAX_INV_COUNTS = 7;
         private const int INV_COUNT_OFFSET = 72;
         private const byte CHAR_CHK_VAL = 6;
