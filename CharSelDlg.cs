@@ -12,6 +12,8 @@
  * Revised: 2022-11-21 - Update to allow for some inventory items (main PC).
  *          2022-12-05 - Added additional companion names to drop down.
  *          2023-02-03 - Added Knurl and Harbinger to drop down.
+ *          2023-12-25 - Added Romeo to the drop down, appears to be an
+ *                       editable campanion.
  * 
  */
 namespace CS_Editor

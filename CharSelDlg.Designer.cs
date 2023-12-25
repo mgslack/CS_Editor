@@ -28,80 +28,70 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.label1 = new System.Windows.Forms.Label();
-            this.okBtn = new System.Windows.Forms.Button();
-            this.cancelBtn = new System.Windows.Forms.Button();
-            this.cbNames = new System.Windows.Forms.ComboBox();
-            this.SuspendLayout();
+            label1 = new Label();
+            okBtn = new Button();
+            cancelBtn = new Button();
+            cbNames = new ComboBox();
+            SuspendLayout();
             // 
             // label1
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(12, 18);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(130, 15);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "&Select Character Name:";
+            label1.AutoSize = true;
+            label1.Location = new Point(12, 18);
+            label1.Name = "label1";
+            label1.Size = new Size(130, 15);
+            label1.TabIndex = 0;
+            label1.Text = "&Select Character Name:";
             // 
             // okBtn
             // 
-            this.okBtn.Location = new System.Drawing.Point(12, 72);
-            this.okBtn.Name = "okBtn";
-            this.okBtn.Size = new System.Drawing.Size(75, 23);
-            this.okBtn.TabIndex = 2;
-            this.okBtn.Text = "&OK";
-            this.okBtn.UseVisualStyleBackColor = true;
-            this.okBtn.Click += new System.EventHandler(this.OkBtn_Click);
+            okBtn.Location = new Point(12, 72);
+            okBtn.Name = "okBtn";
+            okBtn.Size = new Size(75, 23);
+            okBtn.TabIndex = 2;
+            okBtn.Text = "&OK";
+            okBtn.UseVisualStyleBackColor = true;
+            okBtn.Click += OkBtn_Click;
             // 
             // cancelBtn
             // 
-            this.cancelBtn.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.cancelBtn.Location = new System.Drawing.Point(93, 72);
-            this.cancelBtn.Name = "cancelBtn";
-            this.cancelBtn.Size = new System.Drawing.Size(75, 23);
-            this.cancelBtn.TabIndex = 3;
-            this.cancelBtn.Text = "&Cancel";
-            this.cancelBtn.UseVisualStyleBackColor = true;
+            cancelBtn.DialogResult = DialogResult.Cancel;
+            cancelBtn.Location = new Point(93, 72);
+            cancelBtn.Name = "cancelBtn";
+            cancelBtn.Size = new Size(75, 23);
+            cancelBtn.TabIndex = 3;
+            cancelBtn.Text = "&Cancel";
+            cancelBtn.UseVisualStyleBackColor = true;
             // 
             // cbNames
             // 
-            this.cbNames.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbNames.FormattingEnabled = true;
-            this.cbNames.Items.AddRange(new object[] {
-            "",
-            "Evans",
-            "Faythe",
-            "Jed",
-            "Mathias",
-            "Garret",
-            "Cobra",
-            "Knurl",
-            "Harbinger"});
-            this.cbNames.Location = new System.Drawing.Point(148, 15);
-            this.cbNames.Name = "cbNames";
-            this.cbNames.Size = new System.Drawing.Size(196, 23);
-            this.cbNames.TabIndex = 1;
+            cbNames.DropDownStyle = ComboBoxStyle.DropDownList;
+            cbNames.FormattingEnabled = true;
+            cbNames.Items.AddRange(new object[] { "", "Evans", "Faythe", "Jed", "Mathias", "Garret", "Cobra", "Knurl", "Harbinger", "Romeo" });
+            cbNames.Location = new Point(148, 15);
+            cbNames.Name = "cbNames";
+            cbNames.Size = new Size(196, 23);
+            cbNames.TabIndex = 1;
             // 
             // CharSelDlg
             // 
-            this.AcceptButton = this.okBtn;
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.CancelButton = this.cancelBtn;
-            this.ClientSize = new System.Drawing.Size(356, 122);
-            this.Controls.Add(this.cbNames);
-            this.Controls.Add(this.cancelBtn);
-            this.Controls.Add(this.okBtn);
-            this.Controls.Add(this.label1);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
-            this.MaximizeBox = false;
-            this.Name = "CharSelDlg";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "Character Selection";
-            this.Load += new System.EventHandler(this.CharSelDlg_Load);
-            this.ResumeLayout(false);
-            this.PerformLayout();
-
+            AcceptButton = okBtn;
+            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleMode = AutoScaleMode.Font;
+            CancelButton = cancelBtn;
+            ClientSize = new Size(356, 122);
+            Controls.Add(cbNames);
+            Controls.Add(cancelBtn);
+            Controls.Add(okBtn);
+            Controls.Add(label1);
+            FormBorderStyle = FormBorderStyle.FixedDialog;
+            MaximizeBox = false;
+            Name = "CharSelDlg";
+            StartPosition = FormStartPosition.CenterParent;
+            Text = "Character Selection";
+            Load += CharSelDlg_Load;
+            ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion

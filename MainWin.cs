@@ -63,6 +63,8 @@ using System.Reflection;
  *          2023-12-18 - Updated to pick up the right experience value from
  *                       save file.  Was picking up the delta value, which didn't
  *                       update the experience.
+ *          2023-12-25 - Added Romeo to campainion list.  Shouldn't change much,
+ *                       but is a regular companion in save file.
  * 
  */
 namespace CS_Editor
