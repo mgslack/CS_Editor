@@ -7,6 +7,7 @@
     <Nullable>enable</Nullable>
     <UseWindowsForms>true</UseWindowsForms>
     <ImplicitUsings>enable</ImplicitUsings>
+	<ForceDesignerDpiUnaware>true</ForceDesignerDpiUnaware>
     <StartupObject>CS_Editor.Program</StartupObject>
     <Title>Colony Ship Save Game Editor</Title>
     <Authors>Michael G. Slack</Authors>
