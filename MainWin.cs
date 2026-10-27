@@ -65,6 +65,8 @@ using System.Reflection;
  *                       update the experience.
  *          2023-12-25 - Added Romeo to campainion list.  Shouldn't change much,
  *                       but is a regular companion in save file.
+ *          2026-10-27 - Added editing of character feats (Feats button).  Feat
+ *                       list changes size of save file, see SaveFeats class.
  * 
  */
 namespace CS_Editor
@@ -124,6 +126,9 @@ namespace CS_Editor
         private int[] invOffsets = { NOT_SET, NOT_SET, NOT_SET, NOT_SET, NOT_SET, NOT_SET, NOT_SET };
         private int[] invAmounts = { NOT_SET, NOT_SET, NOT_SET, NOT_SET, NOT_SET, NOT_SET, NOT_SET };
         private NumericUpDown[] inventory = new NumericUpDown[MAX_INV_COUNTS];
+        private string curCharName = "";
+        private List<string>? charFeats = null; // null if feats could not be located
+        private bool featsChanged = false;
         #endregion
 
         // --------------------------------------------------------------------
@@ -465,8 +470,31 @@ namespace CS_Editor
             }
         }
 
+        private void LoadFeats()
+        {
+            charFeats = null; featsChanged = false;
+            try
+            {
+                SaveFeats saveFeats = new SaveFeats(fileBuffer);
+                if (saveFeats.LocateChar(charOffset)) charFeats = saveFeats.GetFeats();
+            }
+            catch (Exception ex) { /* leave feats not editable */ }
+            btnFeats.Enabled = (charFeats != null);
+        }
+
+        private void SaveFeatData()
+        {
+            if (featsChanged && charFeats != null)
+            {
+                SaveFeats saveFeats = new SaveFeats(fileBuffer);
+                if (!saveFeats.LocateChar(charOffset)) throw new InvalidDataException("Character feats not found.");
+                fileBuffer = saveFeats.ReplaceFeats(charFeats);
+            }
+        }
+
         private bool FindChar(string name)
         {
+            curCharName = name;
             lblCharName.Text = name;
             byte[] nameVal = CreateNameCheckValue();
             charOffset = Search(fileBuffer, nameVal, 0);
@@ -475,6 +503,7 @@ namespace CS_Editor
                 MessageBox.Show(lblCharName.Text + " not found in save game file.", this.Text,
                     MessageBoxButtons.OK);
                 lblCharName.Text = NOT_LOADED; charChanged = false;
+                charFeats = null; featsChanged = false; btnFeats.Enabled = false;
                 return false;
             }
             else
@@ -483,6 +512,7 @@ namespace CS_Editor
                 LoadCharData();
                 lblCharName.Text += "  (lvl: " + charData[IDX_CHAR_LVL] + ")";
                 LoadControls();
+                LoadFeats();
                 return true;
             }
         }
@@ -569,10 +599,23 @@ namespace CS_Editor
                 }
 
                 if (res == DialogResult.Yes) {
+                    bool reload = featsChanged;
                     UnLoadControls();
                     SaveCharData();
+                    try
+                    {
+                        SaveFeatData();
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show("Save Feats - " + ex.Message + "  Save game file not changed.", this.Text,
+                            MessageBoxButtons.OK);
+                        return;
+                    }
                     File.WriteAllBytes(gameSaveFn, fileBuffer);
                     charChanged = false;
+                    // feats change size of file, reload character to pick up new data offsets
+                    if (reload) _ = FindChar(curCharName);
                     MessageBox.Show("Character saved to save game file.", this.Text, MessageBoxButtons.OK);
                 }
             }
@@ -603,6 +646,21 @@ namespace CS_Editor
                     }
                 }
                 selDlg.Dispose();
+            }
+        }
+
+        private void BtnFeats_Click(object sender, EventArgs e)
+        {
+            if (charFeats != null)
+            {
+                FeatsDlg dlg = new FeatsDlg();
+                dlg.Feats = charFeats;
+                if (dlg.ShowDialog() == DialogResult.OK && dlg.FeatsChanged)
+                {
+                    charFeats = dlg.Feats;
+                    featsChanged = true; charChanged = true;
+                }
+                dlg.Dispose();
             }
         }
 

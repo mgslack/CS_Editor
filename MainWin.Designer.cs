@@ -151,6 +151,7 @@
             this.btnExit = new System.Windows.Forms.Button();
             this.openFileDlg = new System.Windows.Forms.OpenFileDialog();
             this.btnHelp = new System.Windows.Forms.Button();
+            this.btnFeats = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.panel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudCells)).BeginInit();
@@ -1646,11 +1647,23 @@
             this.btnHelp.UseVisualStyleBackColor = true;
             this.btnHelp.Click += new System.EventHandler(this.BtnHelp_Click);
             // 
+            // btnFeats
+            // 
+            this.btnFeats.Enabled = false;
+            this.btnFeats.Location = new System.Drawing.Point(616, 163);
+            this.btnFeats.Name = "btnFeats";
+            this.btnFeats.Size = new System.Drawing.Size(80, 23);
+            this.btnFeats.TabIndex = 7;
+            this.btnFeats.Text = "F&eats";
+            this.btnFeats.UseVisualStyleBackColor = true;
+            this.btnFeats.Click += new System.EventHandler(this.BtnFeats_Click);
+            // 
             // MainWin
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(708, 407);
+            this.Controls.Add(this.btnFeats);
             this.Controls.Add(this.btnHelp);
             this.Controls.Add(this.btnExit);
             this.Controls.Add(this.btnFind);
@@ -1837,6 +1850,7 @@
         private Button btnExit;
         private OpenFileDialog openFileDlg;
         private Button btnHelp;
+        private Button btnFeats;
         private Panel panel3;
         private NumericUpDown nudCredits;
         private Label label34;
